@@ -14,6 +14,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import org.flinkhub.messenger2.AndroidUtilities;
+import org.flinkhub.messenger2.DispatchQueue;
+import org.flinkhub.messenger2.FileLog;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigInteger;

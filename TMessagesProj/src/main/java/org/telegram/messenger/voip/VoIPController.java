@@ -14,12 +14,11 @@ import android.media.audiofx.NoiseSuppressor;
 import android.os.Build;
 import android.os.SystemClock;
 
-import org.telegram.messenger.ApplicationLoader;
-import org.telegram.messenger.BuildConfig;
-import org.telegram.messenger.BuildVars;
-import org.telegram.messenger.MessagesController;
+import org.flinkhub.messenger2.ApplicationLoader;
+import org.flinkhub.messenger2.BuildVars;
+import org.flinkhub.messenger2.MessagesController;
 import org.telegram.tgnet.TLRPC;
-import org.telegram.ui.Components.voip.VoIPHelper;
+import org.flinkhub.ui.Components.voip.VoIPHelper;
 
 import java.io.File;
 import java.util.ArrayList;

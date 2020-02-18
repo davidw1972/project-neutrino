@@ -1,5 +1,9 @@
 package org.telegram.messenger;
 
+import org.flinkhub.messenger2.FileLoadOperation;
+import org.flinkhub.messenger2.FileLoadOperationStream;
+import org.flinkhub.messenger2.FileLoader;
+import org.flinkhub.messenger2.FileLog;
 import org.telegram.tgnet.TLRPC;
 
 import java.util.concurrent.CountDownLatch;

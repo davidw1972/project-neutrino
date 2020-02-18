@@ -1744,7 +1744,7 @@ JNIEXPORT void Java_org_telegram_messenger_Intro_onDrawFrame(JNIEnv *env, jclass
 
         telegram_sphere.params.alpha = 1;
 
-        scale = 1;
+        scale = 0.75;
 
         float alpha = 1;
         if (direct == 0) {
@@ -1752,28 +1752,28 @@ JNIEXPORT void Java_org_telegram_messenger_Intro_onDrawFrame(JNIEnv *env, jclass
 
             fast_body.params.alpha = 1;
             fast_body.params.scale = xyzMake(scale, scale, 1);
-            draw_textured_shape(&fast_body, main_matrix, NORMAL);
+//            draw_textured_shape(&fast_body, main_matrix, NORMAL);
         }
 
         telegram_sphere.params.alpha = alpha;
         telegram_sphere.params.scale = xyzMake(scale, scale, 1);
 
-        telegram_plane.params.alpha = 1;
+//        telegram_plane.params.alpha = 1;
 
-        float tt = MINf(0, (float) (-M_PI * 125. / 180. + time * M_PI * 2 * 1.5));
+//        float tt = MINf(0, (float) (-M_PI * 125. / 180. + time * M_PI * 2 * 1.5));
 
-        float dx = sinf(tt) * 75;
-        float dy = -sinf(tt) * 60;
+//        float dx = sinf(tt) * 75;
+//        float dy = -sinf(tt) * 60;
 
-        telegram_plane.params.position = xyzMake(dx, dy, 0);
+//        telegram_plane.params.position = xyzMake(dx, dy, 0);
 
-        float scale = (cosf(tt) + 1) * 0.5f;
+//        float scale = (cosf(tt) + 1) * 0.5f;
 
-        telegram_plane.params.scale = xyzMake(cosf(tt) * scale, scale, 1);
+//        telegram_plane.params.scale = xyzMake(cosf(tt) * scale, scale, 1);
 
-        if (tt < D2R(125)) {
-            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        }
+//        if (tt < D2R(125)) {
+//            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//        }
     } else if (current_page == 1) {
         rglNormalDraw();
         if (direct == 1) {
@@ -2142,13 +2142,13 @@ JNIEXPORT void Java_org_telegram_messenger_Intro_onDrawFrame(JNIEnv *env, jclass
             float tt = MINf(0, (float) (-M_PI * 125.0f / 180.0f + time * M_PI * 2 * 1.5f));
             float dx = sinf(tt) * 75;
             float dy = -sinf(tt) * 60;
-            telegram_plane.params.position = xyzMake(dx, dy, 0);
+//            telegram_plane.params.position = xyzMake(dx, dy, 0);
             float scale = (cosf(tt) + 1) * 0.5f;
-            telegram_plane.params.scale = xyzMake(cosf(tt) * scale, scale, 1);
+//            telegram_plane.params.scale = xyzMake(cosf(tt) * scale, scale, 1);
 
             if (tt < D2R(125)) {
                 glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-                draw_textured_shape(&telegram_plane, main_matrix, NORMAL_ONE);
+//                draw_textured_shape(&telegram_plane, main_matrix, NORMAL_ONE);
             }
         }
     } else if (current_page == 1) {
@@ -2162,15 +2162,15 @@ JNIEXPORT void Java_org_telegram_messenger_Intro_onDrawFrame(JNIEnv *env, jclass
             float dx = (float) sin(tt) * 75;
             float dy = (float) -sin(tt) * 60;
 
-            telegram_plane.params.position = xyzMake(dx, dy, 0);
+//            telegram_plane.params.position = xyzMake(dx, dy, 0);
 
             float scale = (float) (cos(tt) + 1) * 0.5f;
 
-            telegram_plane.params.scale = xyzMake((float) cos(tt) * scale, scale, 1);
+//            telegram_plane.params.scale = xyzMake((float) cos(tt) * scale, scale, 1);
 
             if (tt < D2R(125)) {
                 glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-                draw_textured_shape(&telegram_plane, main_matrix, NORMAL_ONE);
+//                draw_textured_shape(&telegram_plane, main_matrix, NORMAL_ONE);
             }
         }
     } else if (current_page == 2) {
@@ -2601,9 +2601,9 @@ JNIEXPORT void Java_org_telegram_messenger_Intro_setIcTextures(JNIEnv *env, jcla
     ic_videocam_texture = a_ic_videocam;
 }
 
-JNIEXPORT void Java_org_telegram_messenger_Intro_setTelegramTextures(JNIEnv *env, jclass class, GLuint a_telegram_sphere, GLuint a_telegram_plane) {
+JNIEXPORT void Java_org_telegram_messenger_Intro_setTelegramTextures(JNIEnv *env, jclass class, GLuint a_telegram_sphere) {
     telegram_sphere_texture = a_telegram_sphere;
-    telegram_plane_texture = a_telegram_plane;
+//    telegram_plane_texture = a_telegram_plane;
 }
 
 JNIEXPORT void Java_org_telegram_messenger_Intro_setFastTextures(JNIEnv *env, jclass class, GLuint a_fast_body, GLuint a_fast_spiral, GLuint a_fast_arrow, GLuint a_fast_arrow_shadow) {
@@ -2691,8 +2691,8 @@ JNIEXPORT void Java_org_telegram_messenger_Intro_onSurfaceCreated(JNIEnv *env, j
     mask1 = create_rounded_rectangle(CSizeMake(60, 60), 0, 16, black_color);
 
     telegram_sphere = create_textured_rectangle(CSizeMake(150, 150), telegram_sphere_texture);
-    telegram_plane = create_textured_rectangle(CSizeMake(82, 74), telegram_plane_texture);
-    telegram_plane.params.anchor = xyzMake(6, -5, 0);
+//    telegram_plane = create_textured_rectangle(CSizeMake(82, 74), telegram_plane_texture);
+//    telegram_plane.params.anchor = xyzMake(6, -5, 0);
 
     fast_body = create_textured_rectangle(CSizeMake(148, 148), fast_body_texture);
 

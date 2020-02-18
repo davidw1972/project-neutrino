@@ -23,11 +23,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
-import org.telegram.messenger.AndroidUtilities;
+import org.flinkhub.messenger2.AndroidUtilities;
 import org.telegram.messenger.AnimatedFileDrawableStream;
-import org.telegram.messenger.DispatchQueue;
-import org.telegram.messenger.FileLoader;
-import org.telegram.messenger.FileLog;
+import org.flinkhub.messenger2.DispatchQueue;
+import org.flinkhub.messenger2.FileLoader;
+import org.flinkhub.messenger2.FileLog;
 import org.telegram.tgnet.TLRPC;
 
 import java.io.File;

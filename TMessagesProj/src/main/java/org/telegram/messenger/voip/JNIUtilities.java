@@ -13,8 +13,8 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
-import org.telegram.messenger.ApplicationLoader;
-import org.telegram.messenger.FileLog;
+import org.flinkhub.messenger2.ApplicationLoader;
+import org.flinkhub.messenger2.FileLog;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;

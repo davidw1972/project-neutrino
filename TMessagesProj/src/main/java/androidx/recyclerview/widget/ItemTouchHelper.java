@@ -32,7 +32,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewParent;
 import android.view.animation.Interpolator;
 
-import org.telegram.messenger.AndroidUtilities;
+import org.flinkhub.messenger2.AndroidUtilities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

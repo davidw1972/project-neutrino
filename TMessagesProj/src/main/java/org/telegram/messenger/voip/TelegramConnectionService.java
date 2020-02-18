@@ -8,8 +8,8 @@ import android.telecom.ConnectionRequest;
 import android.telecom.ConnectionService;
 import android.telecom.PhoneAccountHandle;
 
-import org.telegram.messenger.BuildVars;
-import org.telegram.messenger.FileLog;
+import org.flinkhub.messenger2.BuildVars;
+import org.flinkhub.messenger2.FileLog;
 
 /**
  * Created by grishka on 09.01.2018.

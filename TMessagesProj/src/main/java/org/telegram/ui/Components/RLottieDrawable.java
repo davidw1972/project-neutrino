@@ -21,8 +21,8 @@ import android.os.SystemClock;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
-import org.telegram.messenger.ApplicationLoader;
-import org.telegram.messenger.FileLog;
+import org.flinkhub.messenger2.ApplicationLoader;
+import org.flinkhub.messenger2.FileLog;
 
 import java.io.File;
 import java.io.InputStream;

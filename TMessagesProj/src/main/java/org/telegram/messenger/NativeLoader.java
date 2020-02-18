@@ -13,6 +13,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 
+import org.flinkhub.messenger2.BuildVars;
+import org.flinkhub.messenger2.FileLog;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;

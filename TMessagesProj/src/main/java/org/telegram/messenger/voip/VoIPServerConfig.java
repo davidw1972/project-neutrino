@@ -2,11 +2,8 @@ package org.telegram.messenger.voip;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.telegram.messenger.BuildVars;
-import org.telegram.messenger.FileLog;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import org.flinkhub.messenger2.BuildVars;
+import org.flinkhub.messenger2.FileLog;
 
 /**
  * Created by grishka on 01.03.17.

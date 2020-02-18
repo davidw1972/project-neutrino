@@ -4,10 +4,20 @@
     @com.google.android.gms.common.annotation.KeepName *;
 }
 -keep class org.telegram.** { *; }
+-keep class org.flinkhub.** { *; }
 -keep class com.google.android.exoplayer2.ext.** { *; }
 -keep class com.google.android.exoplayer2.util.** { *; }
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
 -dontwarn com.coremedia.**
 -dontwarn org.telegram.**
+-dontwarn org.flinkhub.**
 -dontwarn com.google.android.exoplayer2.ext.**
 -dontwarn com.google.android.exoplayer2.util.**
 -dontwarn com.google.android.gms.**

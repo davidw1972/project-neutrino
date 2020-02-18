@@ -8,8 +8,8 @@
 
 package org.telegram.tgnet;
 
-import org.telegram.messenger.BuildVars;
-import org.telegram.messenger.FileLog;
+import org.flinkhub.messenger2.BuildVars;
+import org.flinkhub.messenger2.FileLog;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

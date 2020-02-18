@@ -8,7 +8,7 @@ import android.os.ParcelFileDescriptor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.telegram.messenger.ApplicationLoader;
+import org.flinkhub.messenger2.ApplicationLoader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

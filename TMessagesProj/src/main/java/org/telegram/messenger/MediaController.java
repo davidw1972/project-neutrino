@@ -55,22 +55,45 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 
-import org.telegram.messenger.audioinfo.AudioInfo;
-import org.telegram.messenger.video.InputSurface;
-import org.telegram.messenger.video.MP4Builder;
-import org.telegram.messenger.video.Mp4Movie;
-import org.telegram.messenger.video.OutputSurface;
+import org.flinkhub.messenger2.AndroidUtilities;
+import org.flinkhub.messenger2.ApplicationLoader;
+import org.flinkhub.messenger2.BuildVars;
+import org.flinkhub.messenger2.DispatchQueue;
+import org.flinkhub.messenger2.DownloadController;
+import org.flinkhub.messenger2.FileLoader;
+import org.flinkhub.messenger2.FileLog;
+import org.flinkhub.messenger2.ImageLoader;
+import org.flinkhub.messenger2.LocaleController;
+import org.flinkhub.messenger2.MediaDataController;
+import org.flinkhub.messenger2.MessageObject;
+import org.flinkhub.messenger2.MessagesController;
+import org.flinkhub.messenger2.MessagesStorage;
+import org.flinkhub.messenger2.MusicPlayerService;
+import org.flinkhub.messenger2.NotificationCenter;
+import org.flinkhub.messenger2.NotificationsController;
+import org.flinkhub.messenger2.R;
+import org.flinkhub.messenger2.SecretChatHelper;
+import org.flinkhub.messenger2.SendMessagesHelper;
+import org.flinkhub.messenger2.SharedConfig;
+import org.flinkhub.messenger2.UserConfig;
+import org.flinkhub.messenger2.VideoEditedInfo;
+import org.flinkhub.messenger2.VideoEncodingService;
+import org.flinkhub.messenger2.audioinfo.AudioInfo;
+import org.flinkhub.messenger2.video.InputSurface;
+import org.flinkhub.messenger2.video.MP4Builder;
+import org.flinkhub.messenger2.video.Mp4Movie;
+import org.flinkhub.messenger2.video.OutputSurface;
 import org.telegram.messenger.voip.VoIPService;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLRPC;
-import org.telegram.ui.ActionBar.AlertDialog;
-import org.telegram.ui.ActionBar.BaseFragment;
-import org.telegram.ui.ChatActivity;
-import org.telegram.ui.Components.EmbedBottomSheet;
-import org.telegram.ui.Components.PhotoFilterView;
-import org.telegram.ui.Components.PipRoundVideoView;
-import org.telegram.ui.Components.VideoPlayer;
-import org.telegram.ui.PhotoViewer;
+import org.flinkhub.ui.ActionBar.AlertDialog;
+import org.flinkhub.ui.ActionBar.BaseFragment;
+import org.flinkhub.ui.ChatActivity;
+import org.flinkhub.ui.Components.EmbedBottomSheet;
+import org.flinkhub.ui.Components.PhotoFilterView;
+import org.flinkhub.ui.Components.PipRoundVideoView;
+import org.flinkhub.ui.Components.VideoPlayer;
+import org.flinkhub.ui.PhotoViewer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -174,7 +197,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         public float sharpenValue;
         public PhotoFilterView.CurvesToolValue curvesToolValue = new PhotoFilterView.CurvesToolValue();
         public float blurExcludeSize;
-        public org.telegram.ui.Components.Point blurExcludePoint;
+        public org.flinkhub.ui.Components.Point blurExcludePoint;
         public float blurExcludeBlurSize;
         public float blurAngle;
     }
@@ -1157,7 +1180,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         }
     }
 
-    protected boolean isRecordingAudio() {
+    public boolean isRecordingAudio() {
         return recordStartRunnable != null || recordingAudio != null;
     }
 
@@ -1869,7 +1892,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         playMessage(currentPlayList.get(currentPlaylistNum));
     }
 
-    protected void checkIsNextMediaFileDownloaded() {
+    public void checkIsNextMediaFileDownloaded() {
         if (playingMessageObject == null || !playingMessageObject.isMusic()) {
             return;
         }

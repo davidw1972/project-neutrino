@@ -15,6 +15,8 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import org.flinkhub.messenger2.ApplicationLoader;
+
 import java.util.Calendar;
 import java.util.HashMap;
 

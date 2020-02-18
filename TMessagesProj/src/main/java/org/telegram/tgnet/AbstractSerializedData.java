@@ -1,5 +1,7 @@
 package org.telegram.tgnet;
 
+import org.telegram.tgnet.NativeByteBuffer;
+
 public abstract class AbstractSerializedData {
 
     public abstract void writeInt32(int x);
