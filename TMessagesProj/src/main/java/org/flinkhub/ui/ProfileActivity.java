@@ -54,6 +54,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import org.flinkhub.fhnet.Constants;
 import org.flinkhub.fhnet.UserData;
 import org.flinkhub.fhnet.models.UserDataObj;
@@ -364,16 +366,16 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 MediaDataController.getInstance(currentAccount).loadBotInfo(user.id, true, classGuid);
             }
 
+            Tracker.setScreenName("UserProfile");
+
             userInfo = MessagesController.getInstance(currentAccount).getUserFull(user_id);
             MessagesController.getInstance(currentAccount).loadFullUser(MessagesController.getInstance(currentAccount).getUser(user_id), classGuid, true);
             participantsMap = null;
             fhUserData = UserData.getUser(user_id, currentAccount);
 
             if (fhUserData != null) {
-                // TODO Log
+                Tracker.logProfileView(fhUserData.getUser_id());
             }
-
-            Tracker.setScreenName("UserProfile");
         } else if (chat_id != 0) {
             currentChat = MessagesController.getInstance(currentAccount).getChat(chat_id);
             if (currentChat == null) {
@@ -1963,15 +1965,20 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             int uid = (Integer) args[0];
             if (uid == user_id) {
                 fhUserData = (UserDataObj) args[1];
-                if (!openAnimationInProgress && callItem == null) {
-                    createActionBarMenu();
-                } else {
-                    recreateMenuAfterAnimation = true;
-                }
 
-                updateRowsIds();
-                if (listAdapter != null) {
-                    listAdapter.notifyDataSetChanged();
+                if (fhUserData != null && fhUserData.getUser_id() == uid) {
+                    if (!openAnimationInProgress && callItem == null) {
+                        createActionBarMenu();
+                    } else {
+                        recreateMenuAfterAnimation = true;
+                    }
+
+                    updateRowsIds();
+                    if (listAdapter != null) {
+                        listAdapter.notifyDataSetChanged();
+                    }
+
+                    Tracker.logProfileView(fhUserData.getUser_id());
                 }
             }
         }

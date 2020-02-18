@@ -5,6 +5,7 @@ import java.util.Vector;
 
 public class UserDataObj implements Serializable {
     private int user_id = 0;
+    private String _id = "";
     private String companyId = "";
     private String locationStr = "";
     private Company company = null;
@@ -22,6 +23,14 @@ public class UserDataObj implements Serializable {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getLocationStr() {
@@ -122,6 +131,10 @@ public class UserDataObj implements Serializable {
 
     public void setBatch(String batch) {
         this.batch = batch;
+    }
+
+    public boolean hasBatch() {
+        return this.batch.length() > 0;
     }
 
     @Override

@@ -214,10 +214,9 @@ public class MyProfileActivity extends BaseFragment implements NotificationCente
         updateRowsIds();
 
         if (fhUserData != null) {
-            // TODO Log
+            Tracker.logProfileView(fhUserData.getUser_id(), true);
         }
 
-        Tracker.setScreenName("MyProfile");
         return true;
     }
 
@@ -709,6 +708,10 @@ public class MyProfileActivity extends BaseFragment implements NotificationCente
 
                 if (listAdapter != null) {
                     listAdapter.notifyDataSetChanged();
+                }
+
+                if (fhUserData != null) {
+                    Tracker.logProfileView(fhUserData.getUser_id(), true);
                 }
             }
         }
@@ -1212,7 +1215,15 @@ public class MyProfileActivity extends BaseFragment implements NotificationCente
         });
 
         (new Thread(() -> {
-            UserDataObj result = UserData.deleteEducation(fhUserData.getUser_id(), experience.getId());
+            UserDataObj result;
+
+            if (experience.getExperienceType() == Experience.WORK_EXP) {
+                result = UserData.deleteExperience(fhUserData.getUser_id(), experience.getId());
+            } else if (experience.getExperienceType() == Experience.EDUCATION) {
+                result = UserData.deleteEducation(fhUserData.getUser_id(), experience.getId());
+            } else {
+                result = null;
+            }
 
             if (result == null) {
                 result = new UserDataObj();

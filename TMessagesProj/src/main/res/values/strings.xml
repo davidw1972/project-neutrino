@@ -3100,8 +3100,19 @@
     <string name="NoGroupChatsHelp">You have not joined any groups yet. Chat with the Flinkhub bot to update your preferences now.</string>
 
     <string name="StartMessagingWithFlinkhubBot">Join Groups</string>
-    <string name="Page1Title_Updated">Interest based university alumni chat app</string>
+
+    <string name="Page1Title_Updated">Flinkhub</string>
     <string name="Page1Message_Updated">For career growth, networking and social meetups</string>
+
+    <string name="Page2Title_Updated">Learn &amp; Upskill</string>
+    <string name="Page2Message_Updated">Make learning and upskilling a part of your life</string>
+
+    <string name="Page3Title_Updated">Network &amp; Grow</string>
+    <string name="Page3Message_Updated">Network with alumni and peers to growth hack your career</string>
+
+    <string name="Page4Title_Updated">Secure chats</string>
+    <string name="Page4Message_Updated">1&#8211;1 encryption based on telegram</string>
+
 
     <string name="MenuJoinAlumniGroups">Join Groups</string>
     <string name="MenuFlinkhubCommunity">Flinkhub Community</string>

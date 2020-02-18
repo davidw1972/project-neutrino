@@ -726,34 +726,125 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         return true;
     }
 
-    private void checkFlinkhubPrerequisites(boolean showAlerts) {
+    private boolean checkAlumniGroups() {
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        int bot_chat_alert_count = preferences.getInt("bot_chat_alert_count", 0);
+        if (bot_chat_alert_count == 0 || bot_chat_alert_count == 1) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("bot_chat_alert_count", bot_chat_alert_count + 1);
+            editor.apply();
+
+            openBotChat();
+
+            return true;
+        }
+
+        if (
+                bot_chat_alert_count == 2
+                        || (bot_chat_alert_count < 8 && bot_chat_alert_count % 3 == 1)
+                        || bot_chat_alert_count == 12
+                        || bot_chat_alert_count % 15 == 0
+        ) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("bot_chat_alert_count", bot_chat_alert_count + 1);
+            editor.apply();
+
+            String errorHeading = "Alumni Groups";
+            String errorMessage = "It seems you have not joined alumni groups yet. Chat with @" + Constants.BOT_USERNAME + " to get the invitation links for alumni groups.";
+            AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
+
+            return true;
+        }
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("bot_chat_alert_count", bot_chat_alert_count + 1);
+        editor.apply();
+
+        return false;
+    }
+
+    private boolean checkEducation() {
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        int profile_education_alert_count = preferences.getInt("profile_education_alert_count", 0);
+        if (profile_education_alert_count == 0) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("profile_education_alert_count", profile_education_alert_count + 1);
+            editor.apply();
+
+            String errorHeading = "Profile";
+            String errorMessage = "You have not added your Education details in your Profile. Always keep your profile up to date.";
+            AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
+            return true;
+        }
+
+        if (profile_education_alert_count == 5 || profile_education_alert_count % 15 == 0) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("profile_education_alert_count", profile_education_alert_count + 1);
+            editor.apply();
+
+            String errorHeading = "Profile";
+            String errorMessage = "You have not added your Education details in your Profile. Always keep your profile up to date.";
+            AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
+            return true;
+        }
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("profile_education_alert_count", profile_education_alert_count + 1);
+        editor.apply();
+
+        return false;
+    }
+
+    private boolean checkExperience() {
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        int profile_experience_alert_count = preferences.getInt("profile_experience_alert_count", 0);
+        if (profile_experience_alert_count == 0) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("profile_experience_alert_count", profile_experience_alert_count + 1);
+            editor.apply();
+
+            String errorHeading = "Profile";
+            String errorMessage = "You have not added your Experience details in your Profile. Always keep your profile up to date.";
+            AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
+            return true;
+        }
+
+        if (profile_experience_alert_count == 5 || profile_experience_alert_count % 15 == 0) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("profile_experience_alert_count", profile_experience_alert_count + 1);
+            editor.apply();
+
+            String errorHeading = "Profile";
+            String errorMessage = "You have not added your Experience details in your Profile. Always keep your profile up to date.";
+            AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
+            return true;
+        }
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("profile_experience_alert_count", profile_experience_alert_count + 1);
+        editor.apply();
+
+        return false;
+    }
+
+    private boolean checkFlinkhubPrerequisites(boolean showAlerts) {
         if (fhUserData == null) {
-            return;
+            return true;
         }
 
-        if (!fhUserData.hasUniversity()) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("showBackButton", false);
-            bundle.putSerializable("fhUserData", fhUserData);
-            presentFragment(new SelectUniversityActivity(bundle));
-            finishFragment();
-            return;
+        if (!fhUserData.hasUniversity() || !fhUserData.hasBatch()) {
+            if (checkAlumniGroups()) {
+                return false;
+            }
+//        } else if (showAlerts) {
+//            if (checkEducation()) {
+//                return false;
+//            } else if (checkExperience()) {
+//                return false;
+//            }
         }
 
-//        if (showAlerts) {
-//            if (!fhUserData.hasEducation()) {
-//                String errorHeading = "Profile";
-//                String errorMessage = "You have not added your Education details in your Profile. Always keep your profile up to date.";
-//                AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
-//                return;
-//            }
-//
-//            if (!fhUserData.hasExperience()) {
-//                String errorHeading = "Profile";
-//                String errorMessage = "You have not added your Work Experience details in your Profile. Always keep your profile up to date.";
-//                AlertsCreator.showSimpleAlert(this, errorHeading, errorMessage);
-//            }
-//        }
+        return true;
     }
 
     @Override
@@ -1732,14 +1823,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     return;
                 }
 
-                if (fhUserData.hasUniversity()) {
+                if (!fhUserData.hasUniversity() || !fhUserData.hasBatch()) {
                     openBotChat();
-                } else {
-                    Bundle args = new Bundle();
-                    args.putBoolean("showBackButton", false);
-                    args.putSerializable("fhUserData", fhUserData);
-                    presentFragment(new SelectUniversityActivity(args));
-                    finishFragment();
                 }
             };
 
@@ -2031,8 +2116,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         super.onResume();
 
         if (fhUserData != null) {
-            checkFlinkhubPrerequisites(false);
-            return;
+            if (!fhUserData.hasUniversity() || !fhUserData.hasBatch()) {
+                if (userInfo != null && userInfo.user != null) {
+                    fhUserData = null;
+                    fhUserData = UserData.getUser(userInfo.user.id, currentAccount, true);
+                }
+            }
         }
 
         if (dialogsAdapter != null && !dialogsListFrozen) {

@@ -14,7 +14,7 @@ public class Experience {
     private String description = "";
     private DateTime startDate = null;
     private DateTime endDate = null;
-    private boolean isCurrent;
+    private boolean isCurrent = false;
 
     public String getId() {
         return id;

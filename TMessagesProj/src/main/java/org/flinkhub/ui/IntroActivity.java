@@ -95,17 +95,17 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
 
         titles = new String[]{
                 LocaleController.getString("Page1Title_Updated", R.string.Page1Title_Updated),
-//                LocaleController.getString("Page2Title", R.string.Page2Title),
-//                LocaleController.getString("Page3Title", R.string.Page3Title),
-//                LocaleController.getString("Page5Title", R.string.Page5Title),
+                LocaleController.getString("Page2Title_Updated", R.string.Page2Title_Updated),
+                LocaleController.getString("Page3Title_Updated", R.string.Page3Title_Updated),
+                LocaleController.getString("Page4Title_Updated", R.string.Page4Title_Updated),
 //                LocaleController.getString("Page4Title", R.string.Page4Title),
 //                LocaleController.getString("Page6Title", R.string.Page6Title)
         };
         messages = new String[]{
                 LocaleController.getString("Page1Message_Updated", R.string.Page1Message_Updated),
-//                LocaleController.getString("Page2Message", R.string.Page2Message),
-//                LocaleController.getString("Page3Message", R.string.Page3Message),
-//                LocaleController.getString("Page5Message", R.string.Page5Message),
+                LocaleController.getString("Page2Message_Updated", R.string.Page2Message_Updated),
+                LocaleController.getString("Page3Message_Updated", R.string.Page3Message_Updated),
+                LocaleController.getString("Page4Message_Updated", R.string.Page4Message_Updated),
 //                LocaleController.getString("Page4Message", R.string.Page4Message),
 //                LocaleController.getString("Page6Message", R.string.Page6Message)
         };
@@ -162,7 +162,7 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                bottomPages.setPageOffset(position, positionOffset);
+                bottomPages.setPageOffset(position, positionOffset);
 
                 float width = viewPager.getMeasuredWidth();
                 if (width == 0) {
@@ -226,8 +226,8 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
             });
         }
 
-//        bottomPages = new BottomPagesView(this, viewPager, 6);
-//        frameLayout.addView(bottomPages, LayoutHelper.createFrame(66, 5, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 350, 0, 0));
+        bottomPages = new BottomPagesView(this, viewPager, 4);
+        frameLayout.addView(bottomPages, LayoutHelper.createFrame(44, 5, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 350, 0, 0));
 
         textView = new TextView(this);
         textView.setTextColor(0xff1393d2);
@@ -279,8 +279,8 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
         super.onResume();
         if (justCreated) {
             if (LocaleController.isRTL) {
-                viewPager.setCurrentItem(6);
-                lastPage = 6;
+                viewPager.setCurrentItem(titles.length);
+                lastPage = titles.length;
             } else {
                 viewPager.setCurrentItem(0);
                 lastPage = 0;
@@ -386,7 +386,7 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
             messageTextView.setTextColor(0xff808080);
             messageTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
             messageTextView.setGravity(Gravity.CENTER);
-            frameLayout.addView(messageTextView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.LEFT, 16, 326, 16, 0));
+            frameLayout.addView(messageTextView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.LEFT, 16, 286, 16, 0));
 
             container.addView(frameLayout, 0);
 
@@ -404,7 +404,7 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
-//            bottomPages.setCurrentPage(position);
+            bottomPages.setCurrentPage(position);
             currentViewPagerPage = position;
         }
 
@@ -442,7 +442,7 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
         private EGLSurface eglSurface;
         private GL gl;
         private boolean initied;
-        private int[] textures = new int[23];
+        private int[] textures = new int[25];
 
         private int surfaceWidth;
         private int surfaceHeight;
@@ -538,7 +538,7 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
             }
             gl = eglContext.getGL();
 
-            GLES20.glGenTextures(23, textures, 0);
+            GLES20.glGenTextures(25, textures, 0);
             loadTexture(R.drawable.intro_fast_arrow_shadow, 0);
             loadTexture(R.drawable.intro_fast_arrow, 1);
             loadTexture(R.drawable.intro_fast_body, 2);
@@ -563,12 +563,15 @@ public class IntroActivity extends Activity implements NotificationCenter.Notifi
 //            loadTexture(R.drawable.intro_tg_plane, 21);
 //            loadTexture(R.drawable.intro_tg_sphere, 22);
             loadTexture(R.drawable.ic_launcher_dr, 21);
+            loadTexture(R.drawable.learn, 22);
+            loadTexture(R.drawable.network, 23);
+            loadTexture(R.drawable.secure, 24);
 
             Intro.setTelegramTextures(textures[21]);
-            Intro.setPowerfulTextures(textures[17], textures[18], textures[16], textures[15]);
-            Intro.setPrivateTextures(textures[19], textures[20]);
-            Intro.setFreeTextures(textures[14], textures[13]);
-            Intro.setFastTextures(textures[2], textures[3], textures[1], textures[0]);
+            Intro.setLearnTextures(textures[22]);
+            Intro.setGrowNetworkTextures(textures[23]);
+            Intro.setSecureTextures(textures[24]);
+
             Intro.setIcTextures(textures[4], textures[5], textures[6], textures[7], textures[8], textures[9], textures[10], textures[11], textures[12]);
             Intro.onSurfaceCreated();
             currentDate = System.currentTimeMillis() - 1000;

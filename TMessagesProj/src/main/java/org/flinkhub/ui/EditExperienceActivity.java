@@ -45,6 +45,7 @@ public class EditExperienceActivity extends BaseFragment {
     private EditTextBoldCursor endDateField;
     private CheckBox currentlyHere;
     private TextView helpTextView;
+    private TextView endDateHelpTextView;
     private final static int done_button = 1;
     private Experience experience = null;
     private UserDataObj fhUserData = null;
@@ -282,24 +283,30 @@ public class EditExperienceActivity extends BaseFragment {
         linearLayout.addView(helpTextView, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT, 24, 10, 24, 0));
 
         FrameLayout fieldContainer6 = new FrameLayout(context);
-        linearLayout.addView(fieldContainer6, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 24, 24, 20, 0));
-
-//        currentlyHere = new CheckBox(context);
-//        if (experience.getExperienceType() == Experience.EDUCATION) {
-//            currentlyHere.setText("I currently study here");
-//        } else if (experience.getExperienceType() == Experience.WORK_EXP) {
-//            currentlyHere.setText("I currently work here");
-//        }
-//        currentlyHere.setChecked(false);
-//        currentlyHere.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
-//            if (buttonView.isChecked()) {
-//                endDateField.setVisibility(View.GONE);
-//            } else {
-//                endDateField.setVisibility(View.VISIBLE);
-//            }
-//        });
-
         FrameLayout fieldContainer4 = new FrameLayout(context);
+
+        linearLayout.addView(fieldContainer6, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 18, 24, 20, 0));
+
+        currentlyHere = new CheckBox(context);
+
+        if (experience.getExperienceType() == Experience.EDUCATION) {
+            currentlyHere.setText("I currently study here");
+        } else if (experience.getExperienceType() == Experience.WORK_EXP) {
+            currentlyHere.setText("I currently work here");
+        }
+
+        currentlyHere.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            if (buttonView.isChecked()) {
+                fieldContainer4.setVisibility(View.GONE);
+                endDateHelpTextView.setVisibility(View.GONE);
+            } else {
+                fieldContainer4.setVisibility(View.VISIBLE);
+                endDateHelpTextView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        fieldContainer6.addView(currentlyHere, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 0, 0, 4, 0));
+
         linearLayout.addView(fieldContainer4, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 24, 24, 20, 0));
 
         DatePickerDialog.OnDateSetListener endDateListener = (view, year, monthOfYear, dayOfMonth) -> {
@@ -344,16 +351,26 @@ public class EditExperienceActivity extends BaseFragment {
 
         fieldContainer4.addView(endDateField, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 0, 0, 4, 0));
 
-        helpTextView = new TextView(context);
-        helpTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
-        helpTextView.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText8));
-        helpTextView.setGravity(LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT);
+        endDateHelpTextView = new TextView(context);
+        endDateHelpTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        endDateHelpTextView.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText8));
+        endDateHelpTextView.setGravity(LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT);
         if (experience.getExperienceType() == Experience.EDUCATION) {
-            helpTextView.setText(AndroidUtilities.replaceTags(LocaleController.getString("UserEducationEndDatePrompt", R.string.UserEducationEndDatePrompt)));
+            endDateHelpTextView.setText(AndroidUtilities.replaceTags(LocaleController.getString("UserEducationEndDatePrompt", R.string.UserEducationEndDatePrompt)));
         } else if (experience.getExperienceType() == Experience.WORK_EXP) {
-            helpTextView.setText(AndroidUtilities.replaceTags(LocaleController.getString("UserExperienceEndDatePrompt", R.string.UserExperienceEndDatePrompt)));
+            endDateHelpTextView.setText(AndroidUtilities.replaceTags(LocaleController.getString("UserExperienceEndDatePrompt", R.string.UserExperienceEndDatePrompt)));
         }
-        linearLayout.addView(helpTextView, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT, 24, 10, 24, 0));
+        linearLayout.addView(endDateHelpTextView, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT, 24, 10, 24, 0));
+
+        if (experience.isCurrent()) {
+            currentlyHere.setChecked(true);
+            fieldContainer4.setVisibility(View.GONE);
+            endDateHelpTextView.setVisibility(View.GONE);
+        } else {
+            currentlyHere.setChecked(false);
+            fieldContainer4.setVisibility(View.VISIBLE);
+            endDateHelpTextView.setVisibility(View.VISIBLE);
+        }
 
         FrameLayout fieldContainer5 = new FrameLayout(context);
         linearLayout.addView(fieldContainer5, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 24, 24, 20, 0));
@@ -411,6 +428,7 @@ public class EditExperienceActivity extends BaseFragment {
 
         String companyDomainName = companyDomainNameField.getText().toString();
         String startDate = new DateTime(startDateCalendar.getTime()).toString(Constants.DT_FORMAT_TO_SERVER);
+        boolean isCurrent = currentlyHere.isChecked();
         String endDate = new DateTime(endDateCalendar.getTime()).toString(Constants.DT_FORMAT_TO_SERVER);
         String description = descriptionField.getText().toString();
 
@@ -435,6 +453,7 @@ public class EditExperienceActivity extends BaseFragment {
             postData.put("companyDomainName", companyDomainName);
             postData.put("startDate", startDate);
             postData.put("endDate", endDate);
+            postData.put("isCurrent", isCurrent);
             postData.put("description", description);
         } catch (JSONException ex) {
             // TODO Handle json error

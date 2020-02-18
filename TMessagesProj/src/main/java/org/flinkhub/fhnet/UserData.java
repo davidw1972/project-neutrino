@@ -23,9 +23,15 @@ public class UserData {
     private static SparseBooleanArray loadingUsers = new SparseBooleanArray();
 
     public static UserDataObj getUser(int user_id, int currentAccount) {
-        UserDataObj user = (UserDataObj) users.get(user_id);
-        if (user != null) {
-            return user;
+        return getUser(user_id, currentAccount, false);
+    }
+
+    public static UserDataObj getUser(int user_id, int currentAccount, boolean forceRefresh) {
+        if (!forceRefresh) {
+            UserDataObj user = (UserDataObj) users.get(user_id);
+            if (user != null) {
+                return user;
+            }
         }
 
         if (loadingUsers.get(user_id, false)) {
@@ -95,6 +101,7 @@ public class UserData {
 
         j = j.getJSONObject("profile");
         u.setLocationStr(getStringFromJSON(j, "locationStr"));
+        u.set_id(j.optString("_id", ""));
         u.setUser_id(j.optInt("telegramUserId", 0));
 
         Vector<Experience> education = new Vector<>();

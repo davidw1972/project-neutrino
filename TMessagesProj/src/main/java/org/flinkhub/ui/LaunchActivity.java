@@ -49,6 +49,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.flinkhub.fhnet.Constants;
 import org.flinkhub.fhnet.UserData;
+import org.flinkhub.fhnet.models.Company;
 import org.flinkhub.fhnet.models.UserDataObj;
 import org.flinkhub.messenger2.AccountInstance;
 import org.flinkhub.messenger2.AndroidUtilities;
@@ -485,15 +486,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                         return;
                     }
 
-                    if (fhUserData.hasUniversity()) {
-                        openBotChat();
-                    } else {
-                        Bundle args = new Bundle();
-                        args.putBoolean("showBackButton", false);
-                        args.putSerializable("fhUserData", fhUserData);
-                        presentFragment(new SelectUniversityActivity(args));
-                    }
-
+                    openBotChat();
                     drawerLayoutContainer.closeDrawer(false);
                 }
             }
@@ -659,6 +652,16 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
             if (fhUserData != null) {
                 drawerLayoutAdapter.setUserData(fhUserData);
+                Tracker.setUserProperty("userId", fhUserData.get_id());
+                Tracker.setUserProperty("companyId", fhUserData.getCompanyId());
+
+                Company company = fhUserData.getCompany();
+                if (company != null) {
+                    Tracker.setUserProperty("companyName", company.getCompanyName());
+                }
+
+                Tracker.setUserProperty("batch", fhUserData.getBatch());
+                Tracker.setUserProperty("isVerified", fhUserData.isVerified() ? "true" : "no");
             }
         }
 
@@ -3022,6 +3025,16 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                 Tracker.setUserId(uid);
                 if (fhUserData != null) {
                     drawerLayoutAdapter.setUserData(fhUserData);
+                    Tracker.setUserProperty("userId", fhUserData.get_id());
+                    Tracker.setUserProperty("companyId", fhUserData.getCompanyId());
+
+                    Company company = fhUserData.getCompany();
+                    if (company != null) {
+                        Tracker.setUserProperty("companyName", company.getCompanyName());
+                    }
+
+                    Tracker.setUserProperty("batch", fhUserData.getBatch());
+                    Tracker.setUserProperty("isVerified", fhUserData.isVerified() ? "true" : "no");
                 }
             }
         }

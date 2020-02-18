@@ -2,6 +2,8 @@ package org.flinkhub.fhnet;
 
 import android.util.Log;
 
+import org.flinkhub.messenger2.BuildVars;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,6 +24,7 @@ public class WebRequest {
 
             con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
+            con.setRequestProperty("X-APP-VERSION", BuildVars.BUILD_VERSION_STRING);
 //        con.setRequestProperty("User-Agent", USER_AGENT);
 
             // Get Response
@@ -60,34 +63,35 @@ public class WebRequest {
      * @throws IOException in case of network errors
      */
     public static String post(String targetURL, String postData) throws IOException {
-        HttpURLConnection connection = null;
+        HttpURLConnection con = null;
 
         try {
             // Create connection
             URL url = new URL(targetURL);
             Log.e(Constants.TAG, "Connecting to internet..");
 
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
 //            connection.setRequestProperty("User-Agent", Config.APP_NAME);
-            connection.setRequestProperty("Content-Length",
+            con.setRequestProperty("Content-Length",
                     Integer.toString(postData.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("X-APP-VERSION", BuildVars.BUILD_VERSION_STRING);
 
-            connection.setUseCaches(false);
-            connection.setDoOutput(true);
+            con.setUseCaches(false);
+            con.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream(
-                    connection.getOutputStream());
+                    con.getOutputStream());
             wr.writeBytes(postData);
             wr.close();
 
             InputStream is;
-            if (200 <= connection.getResponseCode() && connection.getResponseCode() <= 299) {
-                is = connection.getInputStream();
+            if (200 <= con.getResponseCode() && con.getResponseCode() <= 299) {
+                is = con.getInputStream();
             } else {
-                is = connection.getErrorStream();
+                is = con.getErrorStream();
             }
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -102,8 +106,8 @@ public class WebRequest {
             rd.close();
             return response.toString();
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            if (con != null) {
+                con.disconnect();
             }
         }
     }
@@ -132,33 +136,34 @@ public class WebRequest {
      * @throws IOException in case of network errors
      */
     public static String put(String targetURL, String postData) throws IOException {
-        HttpURLConnection connection = null;
+        HttpURLConnection con = null;
 
         try {
             // Create connection
             URL url = new URL(targetURL);
             Log.e(Constants.TAG, "Connecting to internet..");
 
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("PUT");
-            connection.setRequestProperty("Content-Type", "application/json");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("Content-Type", "application/json");
 //            connection.setRequestProperty("User-Agent", Config.APP_NAME);
-            connection.setRequestProperty("Content-Length",
+            con.setRequestProperty("Content-Length",
                     Integer.toString(postData.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("X-APP-VERSION", BuildVars.BUILD_VERSION_STRING);
 
-            connection.setUseCaches(false);
-            connection.setDoOutput(true);
+            con.setUseCaches(false);
+            con.setDoOutput(true);
 
-            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(postData);
             wr.close();
 
             InputStream is;
-            if (200 <= connection.getResponseCode() && connection.getResponseCode() <= 299) {
-                is = connection.getInputStream();
+            if (200 <= con.getResponseCode() && con.getResponseCode() <= 299) {
+                is = con.getInputStream();
             } else {
-                is = connection.getErrorStream();
+                is = con.getErrorStream();
             }
 
             // Get Response
@@ -175,8 +180,8 @@ public class WebRequest {
             Log.e(Constants.TAG, "Got response: " + response);
             return response.toString();
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            if (con != null) {
+                con.disconnect();
             }
         }
     }
@@ -190,33 +195,34 @@ public class WebRequest {
      * @throws IOException in case of network errors
      */
     public static String patch(String targetURL, String postData) throws IOException {
-        HttpURLConnection connection = null;
+        HttpURLConnection con = null;
 
         try {
             // Create connection
             URL url = new URL(targetURL);
             Log.e(Constants.TAG, "Connecting to internet..");
 
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("PATCH");
-            connection.setRequestProperty("Content-Type", "application/json");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PATCH");
+            con.setRequestProperty("Content-Type", "application/json");
 //            connection.setRequestProperty("User-Agent", Config.APP_NAME);
-            connection.setRequestProperty("Content-Length",
+            con.setRequestProperty("Content-Length",
                     Integer.toString(postData.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("X-APP-VERSION", BuildVars.BUILD_VERSION_STRING);
 
-            connection.setUseCaches(false);
-            connection.setDoOutput(true);
+            con.setUseCaches(false);
+            con.setDoOutput(true);
 
-            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(postData);
             wr.close();
 
             InputStream is;
-            if (200 <= connection.getResponseCode() && connection.getResponseCode() <= 299) {
-                is = connection.getInputStream();
+            if (200 <= con.getResponseCode() && con.getResponseCode() <= 299) {
+                is = con.getInputStream();
             } else {
-                is = connection.getErrorStream();
+                is = con.getErrorStream();
             }
 
             // Get Response
@@ -233,8 +239,8 @@ public class WebRequest {
             Log.e(Constants.TAG, "Got response: " + response);
             return response.toString();
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            if (con != null) {
+                con.disconnect();
             }
         }
     }
@@ -248,34 +254,35 @@ public class WebRequest {
      * @throws IOException in case of network errors
      */
     public static String delete(String targetURL, String postData) throws IOException {
-        HttpURLConnection connection = null;
+        HttpURLConnection con = null;
 
         try {
             // Create connection
             URL url = new URL(targetURL);
             Log.e(Constants.TAG, "Connecting to internet..");
 
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("DELETE");
-            connection.setRequestProperty("Content-Type", "application/json");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("DELETE");
+            con.setRequestProperty("Content-Type", "application/json");
 //            connection.setRequestProperty("User-Agent", Config.APP_NAME);
-            connection.setRequestProperty("Content-Length",
+            con.setRequestProperty("Content-Length",
                     Integer.toString(postData.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("Content-Language", "en-US");
+            con.setRequestProperty("X-APP-VERSION", BuildVars.BUILD_VERSION_STRING);
 
-            connection.setUseCaches(false);
-            connection.setDoOutput(true);
+            con.setUseCaches(false);
+            con.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream(
-                    connection.getOutputStream());
+                    con.getOutputStream());
             wr.writeBytes(postData);
             wr.close();
 
             InputStream is;
-            if (200 <= connection.getResponseCode() && connection.getResponseCode() <= 299) {
-                is = connection.getInputStream();
+            if (200 <= con.getResponseCode() && con.getResponseCode() <= 299) {
+                is = con.getInputStream();
             } else {
-                is = connection.getErrorStream();
+                is = con.getErrorStream();
             }
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -290,8 +297,8 @@ public class WebRequest {
             rd.close();
             return response.toString();
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            if (con != null) {
+                con.disconnect();
             }
         }
     }

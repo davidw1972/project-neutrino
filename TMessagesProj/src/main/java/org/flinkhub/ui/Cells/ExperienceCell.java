@@ -205,7 +205,8 @@ public class ExperienceCell extends RecyclerView {
                 if (startDate != null && endDate != null) {
                     timePeriodStr = ex.getStartDate().toString("MMM yyyy") + " - " + ex.getEndDate().toString("MMM yyyy");
                 } else if (startDate != null) {
-                    timePeriodStr = ex.getStartDate().toString("MMM yyyy") + " - Unknown";
+//                    timePeriodStr = ex.getStartDate().toString("MMM yyyy") + " - Unknown";
+                    timePeriodStr = "Joined in " + ex.getStartDate().toString("yyyy");
                 }
             }
 
